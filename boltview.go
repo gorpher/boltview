@@ -63,6 +63,8 @@ func (f *Boltview) DoCommand(command string, args ...string) {
 	case "write":
 		f.Write(args)
 		return
+	case "stat":
+		f.Stat(args)
 	case "help":
 		printHelp()
 	case "exit":
@@ -156,6 +158,10 @@ func (f *Boltview) Rm(args []string) {
 		return nil
 	})
 
+}
+
+func (f *Boltview) Stat(args []string) {
+	fmt.Printf("%#v\n", f.db.Stats())
 }
 
 func (f *Boltview) Mkdir(args []string) {
@@ -456,7 +462,7 @@ func ls(name string, tx *bolt.Tx) []FileInfo {
 }
 
 func printHelp() {
-	fmt.Println("command: cat ls cd pwd touch mkdir rm write exit")
+	fmt.Println("command: cat ls cd pwd touch mkdir rm write exit help")
 }
 
 type FileInfo struct {
